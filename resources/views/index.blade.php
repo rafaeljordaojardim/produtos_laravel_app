@@ -14,10 +14,19 @@
 
     @foreach ($produtos as $produto)
         <div class="produto">
+            @if($produto->imagem) 
+                <img src="/{{$produto->imagem}}" style="max-width:100px;">
+            @endif
             <p>{{ $produto->id }}</p>
             <p>{{ $produto->nome }}</p>
             <p>R$ {{ number_format($produto->preco, 2, ',', '.') }}</p>
             <p>{{ $produto->created_at->format('d/m/Y H:i') }}</p>
+        
+            <form action="/produtos/{{ $produto->id }}" method="post" onsubmit="return confirm('Deseja excluir este produto?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Excluir</button>
+            </form>
         </div>
     @endforeach
 
