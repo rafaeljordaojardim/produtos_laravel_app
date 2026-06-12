@@ -10,6 +10,16 @@
     @if (session('sucesso'))
         <p class="sucesso"> {{ session('sucesso') }} </p>
     @endif
+
+    <form action="/produtos/buscar" method="get">
+        <input type="text" name="busca" value="{{ $busca ?? '' }}">
+        <button type="submit">Buscar</button>
+
+        @if($busca)
+            <a href="/produtos"> Limpar</a>
+        @endif
+    </form>
+
     <a href="/produtos/create">Novo Produto</a>
 
     @foreach ($produtos as $produto)
@@ -27,6 +37,8 @@
                 @method('DELETE')
                 <button type="submit">Excluir</button>
             </form>
+
+            <a href="/produtos/{{ $produto->id }}/edit">Editar</a>
         </div>
     @endforeach
 
